@@ -150,6 +150,7 @@
 	        s.camera.updateT();
 	        requestAnimationFrame(buffer);
 	    }
+	    alert("hello");
 	    var DragDrop = function() {
 	    	function handleEvent(e){
 
@@ -193,13 +194,13 @@
 	    	return {
 	    		enable: function(){
 	    			document.documentElement.addEventListener('touchstart', handleEvent);
-	    			document.documentElement.addEventListener('touchmove',handleEvent);
-	    			document.documentElement.addEventListener('touchend',handleEvent);
+	    			document.documentElement.addEventListener('touchmove', handleEvent);
+	    			document.documentElement.addEventListener('touchend', handleEvent);
 	    		},
 	    		disable: function(){
-	    			document.documentElement.removeEventListener('touchstart',handleEvent);
+	    			document.documentElement.removeEventListener('touchstart', handleEvent);
 	    			document.documentElement.removeEventListener('touchmove', handleEvent);
-	    			document.documentElement.removeEventListener('touchend',handleEvent);
+	    			document.documentElement.removeEventListener('touchend', handleEvent);
 	    		}
 	    	}
 	    }();
