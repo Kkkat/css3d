@@ -179,10 +179,10 @@
 				    	preX = e.touches[0].clientX;
 				    	preY = e.touches[0].clientY;
 
-				    	if(curY <= -30)
-				    		curY = -30;
-				    	else if(curY >= 30)
-				    		curY = 30;
+				    	if(curY <= -10)
+				    		curY = -10;
+				    	else if(curY >= 10)
+				    		curY = 10;
 
 				    	swhole.rotationY += (curX - swhole.rotationY);
 				    	swhole.rotationX += (curY - swhole.rotationX);
