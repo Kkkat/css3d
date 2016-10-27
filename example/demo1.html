@@ -70,7 +70,7 @@
 	    var spart = new C3D.Sprite();
 	    spart.position(0,0,-100).update();
 	    swhole.addChild(spart);
-	    
+
 	    // 创建圆柱
 	    var H = 1024,
 	    	W = 64,
@@ -88,7 +88,7 @@
 	    	});
 	    	spart.addChild(plane);
 	    }
-	    
+
 	    var ptop = new C3D.create({
 	    		type: 'plane',
 	    		name: 'ptop',
@@ -108,7 +108,7 @@
 	    		material: [{image: 'images/bottom.jpg'}]
 	    });
 	    spart.addChild(pbottom);
-	    alert("hello");
+
 	    var locat = new C3D.create({
 	    	type: 'plane',
 	    	name: 'locat',
@@ -121,7 +121,8 @@
 	    document.querySelector('[data-name=locat').appendChild(span);
 	    document.querySelector('.locat').addEventListener('touchstart',function(){
 	    	alert('东方明珠');
-	    })
+	    });
+	    alert("hello");
 	    var preX,
 	    	preY,
 	    	curX = 0,
@@ -150,7 +151,7 @@
 	        s.camera.updateT();
 	        requestAnimationFrame(buffer);
 	    }
-	    
+
 	    var DragDrop = function() {
 	    	function handleEvent(e){
 
