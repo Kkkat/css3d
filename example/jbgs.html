@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="format-detection" content="telephone=no" />
+	<meta name="viewport" content="width=640, target-densitydpi=device-dpi, user-scalable=no"/>
+	<title>绝不跟随</title>
+	<style type="text/css" media="screen">
+		body,ul,ol,h1,h2,h3,h4,h5,h6,dl,dd,form,p{margin:0;padding:0;}
+    	html, body {margin:0;width:100%;height:100%;overflow:hidden;}   
+		#main{position:absolute;top:0;left:0;width:640px;height:100%;overflow:hidden;}  
+	</style>	
+</head>
+<body>
+	<div id="main"></div>
+</body>
+<script type="text/javascript" src="../css3d.min.js"></script>
+<script type="text/javascript">
+	var s = new C3D.Stage();
+	s.size(window.innerWidth, window.innerHeight).material({
+		color: '#000000'
+	}).update();
+	document.getElementById('main').appendChild(s.el);
+
+	var sp = new C3D.Sprite();
+	sp.position(0, 0, 0).update();
+	s.addChild(sp);
+
+	var p = new C3D.Plane();
+	p.size(1400, 1200).position(0,0,-20000).rotation(0,0,0).scale(40,40,40).visibility({
+		visible: true,
+		alpha: 0.5
+	}).material({
+		image: 'images/jbgs/bg.jpg'
+	}).update();
+	sp.addChild(p);
+
+	var sh_bg = new C3D.Sprite();
+	sh_bg.position(0,0,-800).update();
+	sp.addChild(sh_bg);
+
+	var shoe1 = new C3D.Plane();
+	shoe1.size(360,560).position(60,-80,0).rotation(0,0,0).material({
+		image: 'images/jbgs/shoe1.png'
+	}).update();
+	sh_bg.addChild(shoe1);
+
+	var shoe2 = new C3D.Plane();
+	shoe2.size(360,560).position(-60,80,0).rotation(0,0,0).material({
+		image: 'images/jbgs/shoe2.png'
+	}).update();
+	sh_bg.addChild(shoe2);
+
+	var cir_bg = new C3D.Sprite();
+	cir_bg.position(0,0,-800).update();
+	sp.addChild(cir_bg);
+
+	var circle = new C3D.Plane();
+	circle.size(270,270).position(0,0,0).rotation(0,0,0).material({
+		image: 'images/jbgs/circle.png'
+	}).update();
+	cir_bg.addChild(circle);
+</script>
+</html>
