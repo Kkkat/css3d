@@ -16,6 +16,10 @@
 </body>
 <script type="text/javascript" src="../css3d.min.js"></script>
 <script type="text/javascript">
+	requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame || window.oRequestAnimationFrame ||
+	        function(callback) {
+	        setTimeout(callback, 1000 / 60);
+	    };
 	var s = new C3D.Stage();
 	s.size(window.innerWidth, window.innerHeight).material({
 		color: '#000000'
@@ -35,9 +39,13 @@
 	}).update();
 	sp.addChild(p);
 
+	var home_bg = new C3D.Sprite();
+	home_bg.position(0,0,0).update();
+	s.addChild(home_bg);
+	
 	var sh_bg = new C3D.Sprite();
-	sh_bg.position(0,0,-800).update();
-	sp.addChild(sh_bg);
+	sh_bg.name('shoes').position(0,0,-800).update();
+	home_bg.addChild(sh_bg);
 
 	var shoe1 = new C3D.Plane();
 	shoe1.size(360,560).position(60,-80,0).rotation(0,0,0).material({
@@ -53,12 +61,35 @@
 
 	var cir_bg = new C3D.Sprite();
 	cir_bg.position(0,0,-800).update();
-	sp.addChild(cir_bg);
+	home_bg.addChild(cir_bg);
 
 	var circle = new C3D.Plane();
-	circle.size(270,270).position(0,0,0).rotation(0,0,0).material({
+	circle.size(270,270).position(0,0,0).scale(1.2,1.2,1.2).rotation(0,0,0).material({
 		image: 'images/jbgs/circle.png'
 	}).update();
 	cir_bg.addChild(circle);
+
+	var play = new C3D.Plane();
+	play.size(40,40).position(0,0,0).rotation(0,0,0).material({
+		image: 'images/jbgs/play.png'
+	}).update();
+	cir_bg.addChild(play);
+
+	function shake(){
+		sh_bg.x = random(-1, 1, false);
+		sh_bg.rotationZ = random(-1, 1, false);
+		sh_bg.scale(random(0.97, 1, false));
+		sh_bg.alpha = random(0.6, 1, false);
+		sh_bg.update();
+		circle.rotationZ = random(0, 360, true);
+		circle.updateT();
+		requestAnimationFrame(shake);
+	}
+	shake();
+
+	function random(m, n, isRouning) { 
+    	return isRouning ? Math.floor(Math.random() * (n - m + 1) + m) : (Math.random() * (n - m) + m)
+	}
+
 </script>
 </html>
