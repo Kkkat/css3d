@@ -20,6 +20,10 @@
 	        function(callback) {
 	        setTimeout(callback, 1000 / 60);
 	    };
+
+	var pages = {};
+
+	// 最外层
 	var s = new C3D.Stage();
 	s.size(window.innerWidth, window.innerHeight).material({
 		color: '#000000'
@@ -30,6 +34,7 @@
 	sp.position(0, 0, 0).update();
 	s.addChild(sp);
 
+	// 背景
 	var p = new C3D.Plane();
 	p.size(1400, 1200).position(0,0,-20000).rotation(0,0,0).scale(40,40,40).visibility({
 		visible: true,
@@ -38,164 +43,186 @@
 		image: 'images/jbgs/bg.jpg'
 	}).update();
 	// sp.addChild(p);
-
-	// 主页
-	var home_bg = new C3D.Sprite();
-	home_bg.position(0,0,0).update();
-	s.addChild(home_bg);
-	
-	var sh_bg = new C3D.Sprite();
-	sh_bg.name('shoes').position(0,0,-800).update();
-	home_bg.addChild(sh_bg);
-
-	var shoe1 = new C3D.Plane();
-	shoe1.size(360,560).position(60,-80,0).rotation(0,0,0).material({
-		image: 'images/jbgs/shoe1.png'
-	}).update();
-	sh_bg.addChild(shoe1);
-
-	var shoe2 = new C3D.Plane();
-	shoe2.size(360,560).position(-60,80,0).rotation(0,0,0).material({
-		image: 'images/jbgs/shoe2.png'
-	}).update();
-	sh_bg.addChild(shoe2);
-
-	var cir_bg = new C3D.Sprite();
-	cir_bg.position(0,0,-800).update();
-	home_bg.addChild(cir_bg);
-
-	var circle = new C3D.Plane();
-	circle.size(270,270).position(0,0,0).scale(1.2,1.2,1.2).rotation(0,0,0).material({
-		image: 'images/jbgs/circle.png'
-	}).update();
-	cir_bg.addChild(circle);
-
-	var play = new C3D.Plane();
-	play.size(40,40).position(0,0,0).rotation(0,0,0).material({
-		image: 'images/jbgs/play.png'
-	}).update();
-	cir_bg.addChild(play);
-
-
-	var sec_bg = new C3D.Sprite();
-	sec_bg.position(0,0,0).update();
 	
 
-	var circle1 = new C3D.Plane();
-	circle1.size(270,270).position(0,0,-2400).rotation(0,0,0).material({
-		image: 'images/jbgs/circle.png'
-	}).update();
+	(function(){
 
-	var circle2 = new C3D.Plane();
-	circle2.size(270,270).position(0,0,-2400).rotation(0,0,0).material({
-		image: 'images/jbgs/circle.png'
-	}).update();
+		// 主页
+		var home_bg = new C3D.Sprite();
+		home_bg.position(0,0,0).update();
 
-	sec_bg.addChild(circle1);
-	sec_bg.addChild(circle2);
+		var sh_bg = new C3D.Sprite();
+		sh_bg.name('shoes').position(0,0,-800).update();
+		home_bg.addChild(sh_bg);
 
-	s.removeChild(home_bg);
+		var shoe1 = new C3D.Plane();
+		shoe1.size(360,560).position(60,-80,0).rotation(0,0,0).material({
+			image: 'images/jbgs/shoe1.png'
+		}).update();
+		sh_bg.addChild(shoe1);
 
-	var last_bg = new C3D.Sprite();
-	last_bg.position(0,0,0).material({
-		color: '#000'
-	}).update();
-	s.addChild(last_bg);
+		var shoe2 = new C3D.Plane();
+		shoe2.size(360,560).position(-60,80,0).rotation(0,0,0).material({
+			image: 'images/jbgs/shoe2.png'
+		}).update();
+		sh_bg.addChild(shoe2);
 
-	var up = new C3D.Plane();
-	up.size(500,360).position(0,-1000,-2200).rotation(-30,0,0).scale(5,4,1).material({
-		image: 'images/jbgs/up.jpg'
-	}).update();
-	last_bg.addChild(up);
+		var cir_bg = new C3D.Sprite();
+		cir_bg.position(0,0,-800).update();
+		home_bg.addChild(cir_bg);
 
-	var ballbox = new C3D.Plane();
-	ballbox.size(276, 489).position(0,-250,-2000).rotation(-35,0,0).scale(2,2,2).material({
-		image: 'images/jbgs/ballbox.png'
-	}).update();
-	last_bg.addChild(ballbox);
+		var circle = new C3D.Plane();
+		circle.size(270,270).position(0,0,0).scale(1.2,1.2,1.2).rotation(0,0,0).material({
+			image: 'images/jbgs/circle.png'
+		}).update();
+		cir_bg.addChild(circle);
 
-	var floor = new C3D.Plane();
-	floor.size(400,600).position(0,600,-2000).rotation(-85,0,0).scale(5,20,1).material({
-		image: 'images/jbgs/floor.jpg'
-	}).update();
-	last_bg.addChild(floor);
+		var play = new C3D.Plane();
+		play.size(40,40).position(0,0,0).rotation(0,0,0).material({
+			image: 'images/jbgs/play.png'
+		}).update();
+		cir_bg.addChild(play);
 
-	var dec1 = new C3D.Plane();
-	dec1.size(400, 186).position(650,-100,-1500).rotation(90,-60,90).scale(3,2,2).visibility({
-		alpha: 0.6
-	}).material({
-		image: 'images/jbgs/dec1.png'
-	}).update();
-	last_bg.addChild(dec1);
-
-	var dec11 = new C3D.Plane();
-	dec11.size(400, 186).position(600,200,-1500).rotation(95,-155,95).scale(5,2,2).visibility({
-		alpha: 0.6
-	}).material({
-		image: 'images/jbgs/dec1.png'
-	}).update();
-	last_bg.addChild(dec11);
-
-	var dec12 = new C3D.Plane();
-	dec12.size(400, 186).position(-600,100,-1500).rotation(90,-165,90).scale(5,2,2).visibility({
-		alpha: 0.6
-	}).material({
-		image: 'images/jbgs/dec1.png'
-	}).update();
-	last_bg.addChild(dec12);
-
-	var dec2 = new C3D.Plane();
-	dec2.size(400, 186).position(-420,225,-1400).rotation(94,60,90).scale(5,2,2).visibility({
-		alpha: 0.6
-	}).material({
-		image: 'images/jbgs/dec2.png'
-	}).update();
-	last_bg.addChild(dec2);
-
-	var c = circle1;
-	var isfirst = true;
-	function scale(){
-		if(c.z > 0){
-			if(isfirst) {
-				c = circle2;
-				isfirst = false;
-			}else{
+		home_bg.on('click', function(){
+			homeScale();
+		});
+		function homeScale(){
+			sh_bg.z += 20;
+			cir_bg.z -= 60;
+			if(sh_bg.z > 0 && cir_bg.z <= -2000){
+				s.removeChild(home_bg);
+				s.addChild(sec_bg);
+				scale();
 				return;
 			}
+			sh_bg.updateT();
+			cir_bg.updateT();
+			requestAnimationFrame(homeScale);
 		}
-		c.z += 80;
-		c.updateT();
-		requestAnimationFrame(scale);
-	}
+		function shake(){
+			sh_bg.x = random(-1, 1, false);
+			sh_bg.rotationZ = random(-1, 1, false);
+			sh_bg.scale(random(0.97, 1, false));
+			sh_bg.alpha = random(0.6, 1, false);
+			sh_bg.update();
+			circle.rotationZ = random(0, 360, true);
+			circle.updateT();
+			requestAnimationFrame(shake);
+		}
+		shake();
+
+		pages["home_bg"] = home_bg;
+	})();
 	
 
-	home_bg.on('click', function(){
-		homeScale();
-	});
-	function homeScale(){
-		sh_bg.z += 20;
-		cir_bg.z -= 60;
-		if(sh_bg.z > 0 && cir_bg.z <= -2000){
-			s.removeChild(home_bg);
-			s.addChild(sec_bg);
-			scale();
-			return;
+	(function(){
+
+		var sec_bg = new C3D.Sprite();
+		sec_bg.position(0,0,0).update();
+		
+
+		var circle1 = new C3D.Plane();
+		circle1.size(270,270).position(0,0,-2400).rotation(0,0,0).material({
+			image: 'images/jbgs/circle.png'
+		}).update();
+
+		var circle2 = new C3D.Plane();
+		circle2.size(270,270).position(0,0,-2400).rotation(0,0,0).material({
+			image: 'images/jbgs/circle.png'
+		}).update();
+
+		sec_bg.addChild(circle1);
+		sec_bg.addChild(circle2);
+
+		var c = circle1;
+		var isfirst = true;
+		function scale(){
+			if(c.z > 0){
+				if(isfirst) {
+					c = circle2;
+					isfirst = false;
+				}else{
+					return;
+				}
+			}
+			c.z += 80;
+			c.updateT();
+			requestAnimationFrame(scale);
 		}
-		sh_bg.updateT();
-		cir_bg.updateT();
-		requestAnimationFrame(homeScale);
-	}
-	function shake(){
-		sh_bg.x = random(-1, 1, false);
-		sh_bg.rotationZ = random(-1, 1, false);
-		sh_bg.scale(random(0.97, 1, false));
-		sh_bg.alpha = random(0.6, 1, false);
-		sh_bg.update();
-		circle.rotationZ = random(0, 360, true);
-		circle.updateT();
-		requestAnimationFrame(shake);
-	}
-	shake();
+
+		pages["sec_bg"] = sec_bg;
+
+	})();
+
+	
+	(function(){
+
+		var last_bg = new C3D.Sprite();
+		last_bg.position(0,0,0).material({
+			color: '#000'
+		}).update();
+
+		var up = new C3D.Plane();
+		up.size(500,360).position(0,-1000,-2200).rotation(-30,0,0).scale(5,4,1).material({
+			image: 'images/jbgs/up.jpg'
+		}).update();
+		last_bg.addChild(up);
+
+		var ballbox = new C3D.Plane();
+		ballbox.size(276, 489).position(0,-250,-2000).rotation(-35,0,0).scale(2,2,2).material({
+			image: 'images/jbgs/ballbox.png'
+		}).update();
+		last_bg.addChild(ballbox);
+
+		var floor = new C3D.Plane();
+		floor.size(400,600).position(0,600,-2000).rotation(-85,0,0).scale(5,20,1).material({
+			image: 'images/jbgs/floor.jpg'
+		}).update();
+		last_bg.addChild(floor);
+
+		var dec1 = new C3D.Plane();
+		dec1.size(400, 186).position(650,-100,-1500).rotation(90,-60,90).scale(3,2,2).visibility({
+			alpha: 0.6
+		}).material({
+			image: 'images/jbgs/dec1.png'
+		}).update();
+		last_bg.addChild(dec1);
+
+		var dec11 = new C3D.Plane();
+		dec11.size(400, 186).position(600,200,-1500).rotation(95,-155,95).scale(5,2,2).visibility({
+			alpha: 0.6
+		}).material({
+			image: 'images/jbgs/dec1.png'
+		}).update();
+		last_bg.addChild(dec11);
+
+		var dec12 = new C3D.Plane();
+		dec12.size(400, 186).position(-600,100,-1500).rotation(90,-165,90).scale(5,2,2).visibility({
+			alpha: 0.6
+		}).material({
+			image: 'images/jbgs/dec1.png'
+		}).update();
+		last_bg.addChild(dec12);
+
+		var dec2 = new C3D.Plane();
+		dec2.size(400, 186).position(-420,225,-1400).rotation(94,60,90).scale(5,2,2).visibility({
+			alpha: 0.6
+		}).material({
+			image: 'images/jbgs/dec2.png'
+		}).update();
+		last_bg.addChild(dec2);
+
+		var word = new C3D.Plane();
+		word.size(450,160).position(0,-750,-1500).rotation(0,0,0).scale(2,2,2).material({
+			image: 'images/jbgs/jbgs.png'
+		}).update();
+		last_bg.addChild(word);
+
+		pages["last_bg"] = last_bg;
+
+	})();
+	s.addChild(pages["last_bg"]);
+	
 	function random(m, n, isRouning) { 
     	return isRouning ? Math.floor(Math.random() * (n - m + 1) + m) : (Math.random() * (n - m) + m)
 	}
