@@ -3,7 +3,7 @@
 
     guid = 1;
 
-    expando = 'lxjwlt' + (Math.random() + '').replace(/\D/g, '');
+    expando = 'queue';
 
     pool = [];
 
@@ -45,19 +45,23 @@
 
     css = function(elem, obj) {
         var prop;
-
         if (typeof obj === 'object') {
             for (prop in obj) {
                 // elem.style[prop] = obj[prop];
                 elem[prop] = obj[prop];
+                elem.update();
             }
         } else if (arguments.length === 3) {
             // elem.style[arguments[1]] = arguments[2];
-            elem[arguments[1]] = arguments[2]
+            elem[arguments[1]] = arguments[2];
+            elem.update();
         } else {
-            return elem.currentStyle ? 
-                elem.currentStyle[obj] : getComputedStyle(elem, null)[obj];
+            return elem[obj];
         }
+        // else {
+        //     return elem.currentStyle ? 
+        //         elem.currentStyle[obj] : getComputedStyle(elem, null)[obj];
+        // }
     };
 
     run = function(pool, easing) {
@@ -87,7 +91,7 @@
                     val = easing[type](t, b, c, d);
                 }
 
-                css(obj['elem'], obj['propName'], val + obj['unit']);
+                css(obj['elem'], obj['propName'], val);
             }
 
             if (pool.length === 1) {
@@ -106,7 +110,7 @@
             cssVal = css(elem, prop);
             beginVal = +parseFloat(cssVal).toFixed(1);
             targetVal = +parseFloat(attr[prop]).toFixed(1);
-            unit = +cssVal === beginVal ? '' : cssVal.match(/[a-z]+/);
+            // unit = +cssVal === beginVal ? '' : cssVal.match(/[a-z]+/);
 
             if (targetVal !== beginVal) {
                 n += 1;
@@ -117,7 +121,7 @@
                     changeVal: targetVal - beginVal,
                     duration: duration || 400,
                     type: type || 'swing',
-                    unit: unit,
+                    // unit: unit,
                     over: function() {
                         n -= 1;
                         if (n === 0) dequeue(elem);
@@ -129,16 +133,17 @@
         run(pool, easing);
     };
 
-    animate = function(elem, attr, duration, type) {
+    animate = function(elem, attr, duration, type, order) {
         var fnc;
         fnc = animation.bind(window, elem, attr, duration, type);
-        queue(elem, fnc);
+
+        queue(elem, fnc, order);
     };
 
-    queue = function(elem, fnc) {
+    queue = function(elem, fnc, order) {
         var theQueue, internalKey;
         if (!elem[expando]) {
-            elem[expando] = guid++;
+            elem[expando] = order;
             cache[elem[expando]] = [];
         }
         internalKey = elem[expando];
@@ -150,6 +155,7 @@
     };
 
     dequeue = function(elem) {
+        console.log(cache[elem[expando]]);
         var theQueue = cache[elem[expando]],
             state = 'run',
             fnc;
@@ -175,24 +181,24 @@
 
 })(window);
 
-var block = document.getElementById('block'),
-    button = document.getElementById('button'),
-    reset = document.getElementById('reset');
+// var block = document.getElementById('block'),
+//     button = document.getElementById('button'),
+//     reset = document.getElementById('reset');
 
-button.addEventListener('click', function(e) {
-    animate(block, {
-        'left': '200px',
-        'opacity': 0.5
-    }, 800, 'easeOutBounce');
-    animate(block, {
-        'top': '100px',
-        'opacity': 1
-    }, 800, 'easeOutBounce');
-});
+// button.addEventListener('click', function(e) {
+//     animate(block, {
+//         'left': '200px',
+//         'opacity': 0.5
+//     }, 800, 'easeOutBounce');
+//     animate(block, {
+//         'top': '100px',
+//         'opacity': 1
+//     }, 800, 'easeOutBounce');
+// });
 
-reset.addEventListener('click', function(e) {
-    css(block, {
-        'top': '0px',
-        'left': '100px'
-    });
-});
+// reset.addEventListener('click', function(e) {
+//     css(block, {
+//         'top': '0px',
+//         'left': '100px'
+//     });
+// });
