@@ -42,7 +42,7 @@
 	// 主页
 	var home_bg = new C3D.Sprite();
 	home_bg.position(0,0,0).update();
-	s.addChild(home_bg);
+	// s.addChild(home_bg);
 	
 	var sh_bg = new C3D.Sprite();
 	sh_bg.name('shoes').position(0,0,-800).update();
@@ -93,8 +93,6 @@
 
 	sec_bg.addChild(circle1);
 	sec_bg.addChild(circle2);
-
-	s.removeChild(home_bg);
 
 	var last_bg = new C3D.Sprite();
 	last_bg.position(0,0,0).material({
@@ -151,6 +149,7 @@
 		image: 'images/jbgs/dec2.png'
 	}).update();
 	last_bg.addChild(dec2);
+
 
 	var c = circle1;
 	var isfirst = true;

@@ -48,10 +48,12 @@
 
         if (typeof obj === 'object') {
             for (prop in obj) {
-                elem.style[prop] = obj[prop];
+                // elem.style[prop] = obj[prop];
+                elem[prop] = obj[prop];
             }
         } else if (arguments.length === 3) {
-            elem.style[arguments[1]] = arguments[2];
+            // elem.style[arguments[1]] = arguments[2];
+            elem[arguments[1]] = arguments[2]
         } else {
             return elem.currentStyle ? 
                 elem.currentStyle[obj] : getComputedStyle(elem, null)[obj];
