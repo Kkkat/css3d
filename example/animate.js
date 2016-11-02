@@ -93,7 +93,7 @@
 
                 css(obj['elem'], obj['propName'], val);
             }
-
+            console.log(pool);
             if (pool.length === 1) {
                 clearInterval(timeId);
                 pool.pop();
@@ -150,12 +150,13 @@
         theQueue = cache[internalKey];
 
         theQueue.push(fnc);
+        console.log(theQueue);
 
         if (theQueue[0] !== 'run') dequeue(elem);
     };
 
     dequeue = function(elem) {
-        console.log(cache[elem[expando]]);
+
         var theQueue = cache[elem[expando]],
             state = 'run',
             fnc;
