@@ -3,6 +3,8 @@
 
     guid = 1;
 
+    orders = 0;
+
     expando = 'queue';
 
     pool = [];
@@ -93,7 +95,7 @@
 
                 css(obj['elem'], obj['propName'], val);
             }
-            console.log(pool);
+
             if (pool.length === 1) {
                 clearInterval(timeId);
                 pool.pop();
@@ -124,7 +126,7 @@
                     // unit: unit,
                     over: function() {
                         n -= 1;
-                        if (n === 0) dequeue(elem);
+                        if (n === 0) dequeue(guid);
                     }
                 });
             }
@@ -141,44 +143,68 @@
     };
 
     queue = function(elem, fnc, order) {
-        var theQueue, internalKey;
-        if (!elem[expando]) {
-            elem[expando] = order;
-            cache[elem[expando]] = [];
+        // var theQueue, internalKey;
+        // if (!elem[expando]) {
+        //     elem[expando] = order;
+        //     cache[elem[expando]] = [];
+        // }
+        // internalKey = elem[expando];
+        // theQueue = cache[internalKey];
+
+        // theQueue.push(fnc);
+
+        // if (theQueue[0] !== 'run') dequeue(elem);
+
+        if(!cache[order]) {
+            ++ orders;
+            cache[order] = [];
         }
-        internalKey = elem[expando];
-        theQueue = cache[internalKey];
-
-        theQueue.push(fnc);
-        console.log(theQueue);
-
-        if (theQueue[0] !== 'run') dequeue(elem);
+        cache[order].push(fnc);
     };
 
-    dequeue = function(elem) {
+    // dequeue = function(elem) {
 
-        var theQueue = cache[elem[expando]],
-            state = 'run',
+    //     var theQueue = cache[elem[expando]],
+    //         state = 'run',
+    //         fnc;
+
+    //     if (theQueue[0] === state && theQueue.length === 1) {
+    //         theQueue.shift();
+    //         return;
+    //     }
+
+    //     while (theQueue.length) {
+    //         fnc = theQueue.shift();
+    //         if (typeof fnc === 'function') {
+    //             fnc();
+    //             theQueue.unshift(state);
+    //             break;
+    //         }
+    //     }
+    // };
+
+    dequeue = function(order) {
+
+        var theQueue = cache[order],
             fnc;
+        // console.log(theQueue);
 
-        if (theQueue[0] === state && theQueue.length === 1) {
-            theQueue.shift();
-            return;
-        }
-
-        while (theQueue.length) {
+        while (theQueue && theQueue.length) {
             fnc = theQueue.shift();
-            if (typeof fnc === 'function') {
+            if(typeof fnc == 'function') {
                 fnc();
-                theQueue.unshift(state);
-                break;
+                console.log(guid);
             }
         }
+
+        guid++;
+
     };
 
     global.animate = animate;
     global.animation = animation;
     global.css = css;
+    global.dequeue = dequeue;
 
 })(window);
 

@@ -224,9 +224,10 @@
 
 	pages["home_bg"].on('click', function(){
 		animate(pages["home_bg"].children[0], {z: 0}, 600, 'swing', 1);
-		animate(pages["home_bg"].children[1], {z: -2000}, 600, 'swing', 2);
-		animate(pages["home_bg"].children[0], {z: -1000}, 600, 'swing', 1);
-		animate(pages["home_bg"].children[1], {z: -800}, 600, 'swing', 3);
+		animate(pages["home_bg"].children[1], {z: -2000}, 1200, 'swing', 2);
+		animate(pages["home_bg"].children[0], {z: -1000}, 600, 'swing', 3);
+		animate(pages["home_bg"].children[1], {z: -800}, 600, 'swing', 4);
+		dequeue(1);
 		// animate(pages["last_bg"], {z: -1000}, 600);
 	});
 	
