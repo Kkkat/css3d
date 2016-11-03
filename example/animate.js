@@ -3,6 +3,8 @@
 
     guid = 1;
 
+    orders = 0;
+
     expando = 'queue';
 
     pool = [];
@@ -102,7 +104,7 @@
         }, 16);
     };
 
-    animation = function(elem, attr, duration, type) {
+    animation = function(elem, attr, duration, type, callback) {
         var n = 0,
             beginVal, targetVal, prop, n, unit, cssVal;
 
@@ -124,7 +126,11 @@
                     // unit: unit,
                     over: function() {
                         n -= 1;
-                        if (n === 0) dequeue(elem);
+                        if (n === 0) {
+                            if(typeof callback == 'function')
+                                callback();
+                            dequeue(guid);
+                        }
                     }
                 });
             }
@@ -133,58 +139,78 @@
         run(pool, easing);
     };
 
-    animate = function(elem, attr, duration, type, order) {
+    animate = function(elem, attr, duration, type, order, callback) {
         var fnc;
-        fnc = animation.bind(window, elem, attr, duration, type);
+        fnc = animation.bind(window, elem, attr, duration, type, callback);
 
         queue(elem, fnc, order);
     };
 
     queue = function(elem, fnc, order) {
-        var theQueue, internalKey;
-        if (!elem[expando]) {
-            elem[expando] = order;
-            cache[elem[expando]] = [];
-        }
-        internalKey = elem[expando];
-        theQueue = cache[internalKey];
-
-        theQueue.push(fnc);
-        console.log(elem);
-
-        if (theQueue[0] !== 'run') dequeue(elem);
-
-
-        // if(!cache[order]){
-        //     cache[order] = [];
+        // var theQueue, internalKey;
+        // if (!elem[expando]) {
+        //     elem[expando] = order;
+        //     cache[elem[expando]] = [];
         // }
-        // cache[order].push(fnc);
+        // internalKey = elem[expando];
+        // theQueue = cache[internalKey];
+
+        // theQueue.push(fnc);
+
+        // if (theQueue[0] !== 'run') dequeue(elem);
+
+        if(!cache[order]) {
+            ++ orders;
+            cache[order] = [];
+        }
+        cache[order].push(fnc);
+
+
     };
 
-    dequeue = function(elem) {
+    // dequeue = function(elem) {
 
-        var theQueue = cache[elem[expando]],
-            state = 'run',
+    //     var theQueue = cache[elem[expando]],
+    //         state = 'run',
+    //         fnc;
+
+    //     if (theQueue[0] === state && theQueue.length === 1) {
+    //         theQueue.shift();
+    //         return;
+    //     }
+
+    //     while (theQueue.length) {
+    //         fnc = theQueue.shift();
+    //         if (typeof fnc === 'function') {
+    //             fnc();
+    //             theQueue.unshift(state);
+    //             break;
+    //         }
+    //     }
+    // };
+
+    dequeue = function(order) {
+
+        var theQueue = cache[order],
             fnc;
+        console.log(theQueue);
 
-        if (theQueue[0] === state && theQueue.length === 1) {
-            theQueue.shift();
-            return;
-        }
-
-        while (theQueue.length) {
+        while (theQueue && theQueue.length) {
             fnc = theQueue.shift();
-            if (typeof fnc === 'function') {
+            if(typeof fnc == 'function') {
                 fnc();
-                theQueue.unshift(state);
-                break;
+                console.log(guid);
             }
         }
+
+        guid++;
+
     };
 
     global.animate = animate;
     global.animation = animation;
     global.css = css;
+    global.dequeue = dequeue;
 
 })(window);
 
