@@ -104,7 +104,7 @@
         }, 16);
     };
 
-    animation = function(elem, attr, duration, type) {
+    animation = function(elem, attr, duration, type, callback) {
         var n = 0,
             beginVal, targetVal, prop, n, unit, cssVal;
 
@@ -126,7 +126,11 @@
                     // unit: unit,
                     over: function() {
                         n -= 1;
-                        if (n === 0) dequeue(guid);
+                        if (n === 0) {
+                            if(typeof callback == 'function')
+                                callback();
+                            dequeue(guid);
+                        }
                     }
                 });
             }
@@ -135,9 +139,9 @@
         run(pool, easing);
     };
 
-    animate = function(elem, attr, duration, type, order) {
+    animate = function(elem, attr, duration, type, order, callback) {
         var fnc;
-        fnc = animation.bind(window, elem, attr, duration, type);
+        fnc = animation.bind(window, elem, attr, duration, type, callback);
 
         queue(elem, fnc, order);
     };
@@ -160,6 +164,8 @@
             cache[order] = [];
         }
         cache[order].push(fnc);
+
+
     };
 
     // dequeue = function(elem) {
@@ -187,7 +193,7 @@
 
         var theQueue = cache[order],
             fnc;
-        // console.log(theQueue);
+        console.log(theQueue);
 
         while (theQueue && theQueue.length) {
             fnc = theQueue.shift();

@@ -119,34 +119,17 @@
 		
 
 		var circle1 = new C3D.Plane();
-		circle1.size(270,270).position(0,0,-2400).rotation(0,0,0).material({
+		circle1.size(270,270).position(0,0,-2500).rotation(0,0,0).material({
 			image: 'images/jbgs/circle.png'
 		}).update();
 
 		var circle2 = new C3D.Plane();
-		circle2.size(270,270).position(0,0,-2400).rotation(0,0,0).material({
+		circle2.size(270,270).position(0,0,-2500).rotation(0,0,0).material({
 			image: 'images/jbgs/circle.png'
 		}).update();
 
 		sec_bg.addChild(circle1);
 		sec_bg.addChild(circle2);
-
-		var c = circle1;
-		var isfirst = true;
-		function scale(){
-			if(c.z > 0){
-				if(isfirst) {
-					c = circle2;
-					isfirst = false;
-				}else{
-					return;
-				}
-			}
-			c.z += 80;
-			c.updateT();
-			requestAnimationFrame(scale);
-		}
-		sec_bg['scaleFn'] = scale;
 
 		pages["sec_bg"] = sec_bg;
 
@@ -156,7 +139,7 @@
 	(function(){
 
 		var last_bg = new C3D.Sprite();
-		last_bg.position(0,0,0).material({
+		last_bg.position(0,0,-3000).material({
 			color: '#000'
 		}).update();
 
@@ -220,16 +203,41 @@
 
 	})();
 	s.addChild(pages["home_bg"]);
+	
 	// s.addChild(pages["last_bg"]);
 
 	pages["home_bg"].on('click', function(){
-		animate(pages["home_bg"].children[0], {z: 0}, 600, 'swing', 1);
-		animate(pages["home_bg"].children[1], {z: -2000}, 1200, 'swing', 2);
-		animate(pages["home_bg"].children[0], {z: -1000}, 600, 'swing', 3);
-		animate(pages["home_bg"].children[1], {z: -800}, 600, 'swing', 4);
+		animate(pages["home_bg"].children[0], {z: 0}, 600, 'swing', 1, function(){
+			s.addChild(pages["sec_bg"]);
+		});
+		animate(pages["home_bg"].children[1], {z: -2800}, 600, 'swing', 1);
+		animate(pages["sec_bg"].children[0], {z: 0}, 600, 'swing', 3, function(){
+			s.removeChild(pages["home_bg"]);
+		});
+		animate(pages["sec_bg"].children[1], {z: 0}, 600, 'swing', 4, function() {
+			s.addChild(pages["last_bg"]);
+			sp.removeChild(p);
+		});
+		animate(pages["last_bg"], {z: 0}, 600, 'swing', 5);
 		dequeue(1);
-		// animate(pages["last_bg"], {z: -1000}, 600);
 	});
+
+	// var c = circle1;
+	// 	var isfirst = true;
+	// 	function scale(){
+	// 		if(c.z > 0){
+	// 			if(isfirst) {
+	// 				c = circle2;
+	// 				isfirst = false;
+	// 			}else{
+	// 				return;
+	// 			}
+	// 		}
+	// 		c.z += 80;
+	// 		c.updateT();
+	// 		requestAnimationFrame(scale);
+	// 	}
+	// 	sec_bg['scaleFn'] = scale;
 	
 	function random(m, n, isRouning) { 
     	return isRouning ? Math.floor(Math.random() * (n - m + 1) + m) : (Math.random() * (n - m) + m)
