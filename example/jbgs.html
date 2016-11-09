@@ -135,6 +135,40 @@
 
 	})();
 
+
+	(function(){
+
+		var thir_bg = new C3D.Sprite();
+		thir_bg.position(0,0,0).update();
+
+		var mesh = new C3D.Plane();
+		mesh.size(263,268).position(0,-50,-300).rotation(0,0,0).material({
+			image: 'images/jbgs/mesh.png'
+		}).update();
+		thir_bg.addChild(mesh);
+
+		var court = new C3D.Plane();
+		court.size(207,282).position(0,35,-300).rotation(90,0,0).material({
+			image: 'images/jbgs/court.png'
+		}).update();
+		thir_bg.addChild(court);
+
+		var person1 = new C3D.Plane();
+		person1.size(174,241).position(0,0,-1300).rotation(0,0,0).material({
+			image: 'images/jbgs/person1.png'
+		}).update();
+		thir_bg.addChild(person1);
+
+		var person2 = new C3D.Plane();
+		person2.size(174,250).position(150,40,-1300).rotation(0,0,0).material({
+			image: 'images/jbgs/person2.png'
+		}).update();
+		thir_bg.addChild(person2);
+
+		pages["thir_bg"] = thir_bg;
+
+	})();
+
 	
 	(function(){
 
@@ -202,7 +236,8 @@
 		pages["last_bg"] = last_bg;
 
 	})();
-	s.addChild(pages["home_bg"]);
+	// s.addChild(pages["home_bg"]);
+	s.addChild(pages["thir_bg"]);
 	
 	// s.addChild(pages["last_bg"]);
 
@@ -221,23 +256,6 @@
 		animate(pages["last_bg"], {z: 0}, 600, 'swing', 5);
 		dequeue(1);
 	});
-
-	// var c = circle1;
-	// 	var isfirst = true;
-	// 	function scale(){
-	// 		if(c.z > 0){
-	// 			if(isfirst) {
-	// 				c = circle2;
-	// 				isfirst = false;
-	// 			}else{
-	// 				return;
-	// 			}
-	// 		}
-	// 		c.z += 80;
-	// 		c.updateT();
-	// 		requestAnimationFrame(scale);
-	// 	}
-	// 	sec_bg['scaleFn'] = scale;
 	
 	function random(m, n, isRouning) { 
     	return isRouning ? Math.floor(Math.random() * (n - m + 1) + m) : (Math.random() * (n - m) + m)
